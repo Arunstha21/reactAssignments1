@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./App.css";
-import Calculator from "./component/calculator";
-import UserForm from "./component/userForm";
+import Calculator from "./component/calculator/calculator";
+import UserForm from "./component/userForm/userForm";
 
 function App() {
   const [showCalculator, setShowCalculator] = useState(false);

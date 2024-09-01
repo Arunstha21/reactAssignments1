@@ -17,7 +17,7 @@ body {
     text-align: center;
   }
   
-  .input {
+  .inputBox {
     width: 100%;
     height: 80px;
     resize: none;
@@ -26,7 +26,6 @@ body {
     margin-bottom: 20px;
     border-radius: 5px;
     border: 1px solid #ccc;
-    /* direction: rtl; */
     text-align: bottom;
     overflow: hidden;
     box-sizing: border-box;

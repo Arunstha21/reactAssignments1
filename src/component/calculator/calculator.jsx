@@ -69,7 +69,7 @@ export default function Calculator() {
           onKeyDown={handleKeyDown}
           rows={4}
           cols={50}
-          className="input"
+          className="inputBox"
         />
         {error && <h5 style={{ color: "red" }}>{error}</h5>}
         <div className="controlButtons">
