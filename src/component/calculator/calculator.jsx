@@ -11,9 +11,8 @@ function Button({ title, onClick, isZero }) {
 
 export default function Calculator() {
   const [inputValue, setInputValue] = useState("");
-  const [result, setResult] = useState(null);
   const [error, setError] = useState("");
-  const [displayValue, setDisplayValue] = useState("");
+  const [displayValue, setDisplayValue] = useState(0);
 
   const handleButtonInput = (e) => {
     const value = inputValue + e.target.value;
@@ -33,8 +32,12 @@ export default function Calculator() {
 
     try {
       const evalResult = eval(inputValue);
-      setResult(evalResult);
+      if (evalResult === undefined) {
+        setError("Invalid expression");
+        return;
+      }
       setDisplayValue(`${inputValue}\n${evalResult}`);
+      setInputValue("");
       setError("");
     } catch (e) {
       setError("Invalid expression");
@@ -71,12 +74,12 @@ export default function Calculator() {
           cols={50}
           className="inputBox"
         />
-        {error && <h5 style={{ color: "red" }}>{error}</h5>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
         <div className="controlButtons">
           <button className="button clear" onClick={() => {
             setInputValue("");
-            setDisplayValue("");
-            setResult(null);
+            setError("");
+            setDisplayValue(0);
           }}>
             C
           </button>
