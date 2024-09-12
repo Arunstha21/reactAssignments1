@@ -40,5 +40,14 @@ async function getShortenedURL(shortUrl: string) {
     }
 }
 
-export { shortenURL, getShortenedURLs, getShortenedURL };
+async function updateCount(id: string, count: number) {
+    try {
+        const response = await URLShortenerAPI.put(`/urlShortener/${id}`, { count });
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
+export { shortenURL, getShortenedURLs, getShortenedURL,updateCount };
 
