@@ -23,6 +23,22 @@ The URL Shortener allows users to shorten long URLs, store the data on [MockAPI]
 
 **Access the URL Shortener:** `/urlshortener`
 
+## User Management
+
+The User Management page enables the addition and management of user data. Data is fetched from MockAPI, and users can input and edit user details via a form that leverages various UI components.
+
+### Features:
+- Data is fetched from MockAPI.
+- Displays user data in a table using Shadcn's table component.
+- A form is used for adding and editing user details, with fields for:
+  - **Calendar**: For selecting dates.
+  - **Combobox**: For selecting options from a list.
+  - **Select**: For predefined options.
+  - **Switch**: For toggling boolean values.
+- The form is displayed inside a sheet component for easy access.
+
+**Access the User Management page:** `/user`
+
 ---
 
 ## Technologies Used
