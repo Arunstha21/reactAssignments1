@@ -41,10 +41,8 @@ import { Switch } from "@/components/ui/switch";
 const userFormSchema = z.object({
   name: z.string().min(3),
   email: z.string().email(),
-  dateOfBirth: z.date({
-    required_error: "A date of birth is required.",
-  }),
-  gender: z.enum(["Male", "Female", "Other"]),
+  dateOfBirth: z.string(),
+  gender: z.string(),
   emailMarketing: z.boolean(),
   country: z.string().min(2),
 });
@@ -59,6 +57,10 @@ import {
   CommandList,
 } from "@/components/ui/command";
 
+type FormValues = z.infer<typeof userFormSchema>;
+
+export type { FormValues }
+
 export default function UserForm() {
   const form = useForm({
     resolver: zodResolver(userFormSchema),
@@ -72,13 +74,15 @@ export default function UserForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof userFormSchema>) {
+  function onSubmit(values: FormValues) {
     console.log(values);
   }
   return (
     <div>
       <Sheet>
-        <SheetTrigger>Add User</SheetTrigger>
+        <SheetTrigger asChild>
+            <Button variant="default">Add User</Button>
+        </SheetTrigger>
         <SheetContent>
           <SheetHeader>Add User</SheetHeader>
           <Form {...form}>
@@ -143,7 +147,7 @@ export default function UserForm() {
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                           mode="single"
-                          selected={field.value}
+                          selected={new Date(field.value)}
                           onSelect={field.onChange}
                           disabled={(date) =>
                             date > new Date() || date < new Date("1900-01-01")
