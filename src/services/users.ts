@@ -21,4 +21,31 @@ async function getUsers() {
     }
 }
 
-export { getUsers };
+async function createUser(data: FormValues) {
+    try {
+        const response = await userAPI.post<Users>(`/users`, data);
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
+async function updateUser(id: string, data: FormValues) {
+    try {
+        const response = await userAPI.put<Users>(`/users/${id}`, data);
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
+async function deleteUser(id: string) {
+    try {
+        const response = await userAPI.delete<Users>(`/users/${id}`);
+        return response.data;
+    } catch (error: any) {
+        return error.response.data;
+    }
+}
+
+export { getUsers, createUser, updateUser, deleteUser };

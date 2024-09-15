@@ -41,7 +41,7 @@ import { Switch } from "@/components/ui/switch";
 const userFormSchema = z.object({
   name: z.string().min(3),
   email: z.string().email(),
-  dateOfBirth: z.string(),
+  dateOfBirth: z.date(),
   gender: z.string(),
   emailMarketing: z.boolean(),
   country: z.string().min(2),
@@ -56,33 +56,57 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { createUser } from "@/services/users";
 
 type FormValues = z.infer<typeof userFormSchema>;
 
 export type { FormValues }
 
-export default function UserForm() {
+interface UserFormProps {
+  onUserAdded: () => void;
+  onCancel: () => void;
+  isFormOpen: boolean;
+  isEdit?: boolean;
+  editData?: FormValues & { id: string };
+}
+
+export default function UserForm({ onUserAdded, onCancel, isFormOpen, isEdit, editData }: UserFormProps) {
+  const createDefaultValues = {
+    name: "",
+    email: "",
+    dateOfBirth: "",
+    gender: "Other",
+    emailMarketing: false,
+    country: "",
+  }
+
+  const editDefaultValues = {
+    name: editData?.name || "",
+    email: editData?.email || "",
+    dateOfBirth: editData?.dateOfBirth || "",
+    gender: editData?.gender || "Other",
+    emailMarketing: editData?.emailMarketing || false,
+    country: editData?.country || "",
+  }
+
+  console.log(editDefaultValues);
+  
+
+
   const form = useForm({
     resolver: zodResolver(userFormSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      dateOfBirth: "",
-      gender: "Other",
-      emailMarketing: false,
-      country: "",
-    },
+    defaultValues: isEdit ? editDefaultValues : createDefaultValues,
   });
 
-  function onSubmit(values: FormValues) {
+  async function onSubmit(values: FormValues) {
     console.log(values);
+    const res = await createUser(values);
+    console.log(res);
+    onUserAdded();
   }
   return (
     <div>
-      <Sheet>
-        <SheetTrigger asChild>
-            <Button variant="default">Add User</Button>
-        </SheetTrigger>
+      <Sheet open={isFormOpen} onOpenChange={onCancel}>
         <SheetContent>
           <SheetHeader>Add User</SheetHeader>
           <Form {...form}>
